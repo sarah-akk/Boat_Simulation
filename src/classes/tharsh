@@ -1,0 +1,100 @@
+let count = 1;
+  let h1 = 1.0 / fluid.spacing;
+  let position = object.position;
+  let objWidth = object.width;
+  let objHeight = object.height;
+  let objDepth = object.depth;
+  let h2 = fluid.spacing * fluid.spacing;
+
+  let test = 0;
+  let test2 = 0;
+
+  let widthUnderWater = 0;
+  let heightUnderWater = 0;
+  let depthUnderWater = 0;
+
+  let minX = Math.max(
+    0,
+    fluid.centerOfX + Math.floor((position.x - objWidth * 0.5) * h1)
+  );
+  let maxX = Math.min(
+    fluid.columnsI - 1,
+    fluid.centerOfX + Math.floor((position.x + objWidth * 0.5) * h1)
+  );
+  let minZ = Math.max(
+    0,
+    fluid.centerOfZ + Math.floor((position.z - objDepth * 0.5) * h1)
+  );
+  let maxZ = Math.min(
+    fluid.columnsJ - 1,
+    fluid.centerOfZ + Math.floor((position.z + objDepth * 0.5) * h1)
+  );
+
+  for (let i = minX; i < maxX; i++) {
+    for (let j = minZ; j < maxZ; j++) {
+      fluid.preBodycolumnsHeight[i][j] = fluid.bodycolumnsHeight[i][j];
+      fluid.bodycolumnsHeight[i][j] = 0.0;
+    }
+  }
+
+  for (let xi = minX; xi <= maxX; xi++) {
+    for (let zi = minZ; zi <= maxZ; zi++) {
+      let x = (xi - fluid.centerOfX) * fluid.spacing;
+      let z = (zi - fluid.centerOfZ) * fluid.spacing;
+      count++;
+
+      if (
+        x >= position.x - objWidth / 2 &&
+        x <= position.x + objWidth / 2 &&
+        z >= position.z - objDepth / 2 &&
+        z <= position.z + objDepth / 2 &&
+        position.y <= objHeight / 2 + fluid.depth &&
+        position.y >= 0
+      ) {
+        let waterHeight = fluid.columnsHeight[xi][zi];
+        let bodyHeight;
+        if (position.y > waterHeight) {
+          let nonSubmergedPart = position.y - waterHeight;
+          bodyHeight = objHeight / 2 - nonSubmergedPart;
+        } else {
+          let submergedPart = waterHeight - position.y;
+          bodyHeight = Math.min(objHeight, submergedPart + objHeight / 2);
+        }
+
+        
+
+        volume += bodyHeight * h2 * 0.961168788;
+
+        test += bodyHeight * h2 * 0.961168788 * WATERDENSITY * -gravity;
+
+        test2 += bodyHeight * h2 * 0.961168788 * WATERDENSITY * -gravity;
+        test2 *= 0.999;
+
+        fluid.bodycolumnsHeight[xi][zi] += bodyHeight;
+      }
+    }
+  }
+
+  // for (let iter = 0; iter < 2; iter++) {
+  //   for (let xi = minX; xi < maxX; xi++) {
+  //     for (let zi = minZ; zi < maxZ; zi++) {
+  //       let num = xi > 0 && xi < fluid.columnsI - 1 ? 2 : 1;
+  //       num += zi > 0 && zi < fluid.columnsJ - 1 ? 2 : 1;
+  //       let avg = 0.0;
+  //       if (xi > 0) avg += fluid.bodycolumnsHeight[xi - 1][zi];
+  //       if (xi < fluid.columnsI - 1) avg += fluid.bodycolumnsHeight[xi + 1][zi];
+  //       if (zi > 0) avg += fluid.bodycolumnsHeight[xi][zi - 1];
+  //       if (zi < fluid.columnsJ - 1) avg += fluid.bodycolumnsHeight[xi][zi + 1];
+  //       avg /= num;
+  //       fluid.bodycolumnsHeight[xi][zi] = avg;
+  //     }
+  //   }
+  // }
+
+  // for (let i = minX; i <= maxX; i++) {
+  //   for (let j = minZ; j <= maxZ; j++) {
+  //     let bodyChange =
+  //       fluid.bodycolumnsHeight[i][j] - fluid.preBodycolumnsHeight[i][j];
+  //     fluid.columnsHeight[i][j] += fluid.alpha * bodyChange;
+  //   }
+  // }

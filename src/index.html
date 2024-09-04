@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Boat Simulation</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      #playAudioButton {
+      position: absolute;
+      top: 20px; /* Adjust as needed */
+      left: 20px; /* Adjust as needed */
+      z-index: 1000; /* Ensure it's above the Three.js canvas */
+      background-color: #ccc;
+      border: 1px solid #000;
+      padding: 10px;
+      cursor: pointer;
+    }
+    </style>
+  </head>
+  <body>
+    <button id="playAudioButton">Start Audio</button>
+    <canvas id="root" style="position: fixed; left: 0; top: 0"></canvas>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
