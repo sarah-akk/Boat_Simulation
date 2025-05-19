@@ -7,14 +7,12 @@ import Fluid from "./Fluid";
 import GUI from "lil-gui";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
-
-import rock5 from "../../static/Models/rock5.glb";
-import shortPlant from "../../static/Models/shortPlant.glb";
-import coral from "../../static/Models/coral.glb";
-import tree from "../../static/Models/palm.glb";
-
-import plant from "../../static/Models/plant.glb";
-import rock8 from "../../static/Models/rock8.glb";
+const rock5 = new URL("../../static/Models/rock5.glb", import.meta.url).href;
+const shortPlant = new URL("../../static/Models/shortPlant.glb", import.meta.url).href;
+const coral = new URL("../../static/Models/coral.glb", import.meta.url).href;
+const tree = new URL("../../static/Models/tree.glb", import.meta.url).href;
+const plant = new URL("../../static/Models/plant.glb", import.meta.url).href;
+const rock8 = new URL("../../static/Models/rock8.glb", import.meta.url).href;
 
 export default class Engine {
   #ROOT;

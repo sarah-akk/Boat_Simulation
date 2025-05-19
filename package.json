@@ -1,5 +1,8 @@
 {
-  "scripts": {
+  "main": "src/main2.js",
+  "type": "module",
+"scripts": {
+    "start": "electron .",
     "dev": "vite",
     "build": "vite build"
   },
@@ -9,6 +12,7 @@
     "vite": "^5.2.13"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.1.2"
+    "@vitejs/plugin-vue": "^5.1.2",
+    "electron": "^36.2.1"
   }
 }

@@ -4,6 +4,10 @@ import Object3D from "../classes/Object3D";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import gui from "../classes/Gui";
 
+const yachtPath = new URL("../../static/Models/newyacht2.glb", import.meta.url).href;
+const steeringWheelPath = new URL("../../static/Models/steeringWheel.glb", import.meta.url).href;
+const leverPath = new URL("../../static/Models/lever.glb", import.meta.url).href;
+
 export class Boat {
   rightEngine;
   leftEngine;
@@ -56,14 +60,15 @@ export class Boat {
   rotate(degree) {
     this.boat.changeRotationY(degree);
   }
+
   async loadModels(AddToScene) {
     await this.rightEngine.loadModel();
     await this.leftEngine.loadModel();
 
     const gltf = new GLTFLoader();
-    gltf.load("/Models/newyacht2.glb", (model) => {
+    gltf.load(yachtPath, (model) => {
       model = model.scene;
-      gltf.load("/Models/steeringWheel.glb", (steeringWheel) => {
+      gltf.load(steeringWheelPath, (steeringWheel) => {
         steeringWheel = steeringWheel.scene;
         steeringWheel.scale.set(0.65, 0.65, 0.65);
         steeringWheel.rotateY(-4.725);
@@ -73,7 +78,7 @@ export class Boat {
         this.#steeringWheel.position.set(0.32, 0.79, -0.01);
         this.#steeringWheel.rotateZ(-0.75);
 
-        gltf.load("/Models/lever.glb", (lever) => {
+        gltf.load(leverPath, (lever) => {
           lever = lever.scene;
           lever.scale.set(0.105, 0.105, 0.105);
           lever.position.set(0.307, 0.8025, -0.08075);
@@ -96,14 +101,13 @@ export class Boat {
           );
 
           this.boat.setMesh(this.#componet);
-
           this.boat.createRigidBodyWithMass(5500);
           gui.add(this.boat.rigidBody, 'mass');
 
           this.#componet.add(this.leftEngine.fullEngine.getMesh());
           this.#componet.add(this.rightEngine.fullEngine.getMesh());
 
-          var sphereAxis = new AxesHelper(12.5);
+          const sphereAxis = new AxesHelper(12.5);
           this.#componet.add(sphereAxis);
 
           this.boat.rigidBody.link(this.leftEngine.fullEngine.rigidBody);
@@ -117,11 +121,12 @@ export class Boat {
 
   #releaseKey(e) {
     this.#buttons[e.code] = false;
-    if (e.code == "KeyF") {
+    if (e.code === "KeyF") {
       this.rightEngine.toggleEngine();
       this.leftEngine.toggleEngine();
     }
   }
+
   #pressKey(e) {
     if (this.leftEngine.isTurned() && this.rightEngine.isTurned()) {
       this.#buttons[e.code] = true;
@@ -143,6 +148,4 @@ export class Boat {
       }
     }
   }
-
-
 }

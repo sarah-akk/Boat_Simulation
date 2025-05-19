@@ -3,6 +3,11 @@ import Object3D from "../classes/Object3D";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import gui from "../classes/Gui";
 
+
+const boatEngineUrl = new URL("../../static/Models/boatengine.glb", import.meta.url).href;
+const propellerUrl = new URL("../../static/Models/propeller2.glb", import.meta.url).href;
+
+
 // YAMAHA 300 HP V6 4.2-liter F300
 // https://yamahaoutboards.com/outboards/350-150-hp/v6-4-2l#specs-compare
 export class BoatEngine {
@@ -77,13 +82,13 @@ export class BoatEngine {
 
   async loadModel() {
     const gltf = new GLTFLoader();
-    let boatengine = await gltf.loadAsync("/Models/boatengine.glb");
+    let boatengine = await gltf.loadAsync(boatEngineUrl);
 
     boatengine =
       boatengine.scene.children[0].children[0].children[0].children[0];
     this.#engine = boatengine;
 
-    let propeller = await gltf.loadAsync("/Models/propeller2.glb");
+    let propeller = await gltf.loadAsync(propellerUrl);
 
     propeller = propeller.scene.children[0].children[0];
     propeller.position.set(0, -0.475, -0.39);

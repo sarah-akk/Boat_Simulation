@@ -1,5 +1,15 @@
-import sound2 from "../../static/Audio/sound2.mp3"
-import sound1 from "../../static/Audio/sound1.mp3"
+// import sound2 from "../../static/Audio/sound2.mp3"
+// import sound1 from "../../static/Audio/sound1.mp3"
+
+const sound1 = new URL("../../static/Audio/sound1.mp3", import.meta.url).href;
+const sound2 = new URL("../../static/Audio/sound2.mp3", import.meta.url).href;
+
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+
+// const sound1 = `file://${path.join(__dirname, '../../static/Audio/sound1.mp3')}`;
+// const sound2 = `file://${path.join(__dirname, '../../static/Audio/sound2.mp3')}`;
+
 
 export default class AudioManager {
     constructor() {

@@ -1,5 +1,4 @@
 import { Vector3 } from "three";
-import gui from "../classes/Gui";
 export default class RigidBody {
   position;
   velocity;

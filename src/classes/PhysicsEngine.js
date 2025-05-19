@@ -1,6 +1,5 @@
 import Object3D from "./Object3D";
 import Fluid from "./Fluid";
-import PhysicsWorker from "./PhysucsWorker";
 import { MathUtils } from "three";
 
 const DT = 1.0 / 60.0;
